@@ -17,7 +17,7 @@ styles.css    Stil
 app.js        Dil algılama ve çeviri sözlüğü (9 dil)
 hero.svg      Dashboard illüstrasyonu
 favicon.svg
-og.png        Sosyal medya önizleme görseli (1200×630)
+og.jpg        Sosyal medya önizleme görseli (1200×630)
 vercel.json   Başlıklar, temiz URL'ler
 robots.txt, sitemap.xml
 ```

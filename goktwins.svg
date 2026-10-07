@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="GokTwins">
+  <title>GokTwins</title>
+  <defs>
+    <linearGradient id="gok" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#16b4d2"/>
+      <stop offset="1" stop-color="#0a7a93"/>
+    </linearGradient>
+  </defs>
+  <!-- Gök turkuazı zemin; iki üçgen ve ileri bakan ok. -->
+  <rect width="64" height="64" rx="14" fill="url(#gok)"/>
+  <g fill="#ffffff">
+    <polygon points="17,10 26,26 8,26"/>
+    <polygon points="32,13 40,26 24,26" fill-opacity="0.78"/>
+    <polygon points="8,30 39,30 56,41.5 39,53 8,53 19.5,41.5"/>
+  </g>
+</svg>

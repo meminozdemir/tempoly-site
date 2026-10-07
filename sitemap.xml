@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://tempoly.app/</loc>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://tempoly.app/?lang=tr"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tempoly.app/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://tempoly.app/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tempoly.app/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://tempoly.app/?lang=pt"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://tempoly.app/?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://tempoly.app/?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://tempoly.app/?lang=id"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://tempoly.app/?lang=vi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tempoly.app/"/>
+  </url>
+</urlset>

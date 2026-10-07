@@ -26,7 +26,7 @@
       "features.voice.text": "Tempoly sesini, konularını ve tarzını öğrenir; her gönderi jenerik değil, senin olur.",
       "platforms.web": "Web", "platforms.ios": "iOS", "platforms.android": "Android", "platforms.creators": "İçerik üreticileri için",
       "footer.rights": "Tüm hakları saklıdır.",
-      "footer.maker": "Bir GokTwins Tech ürünüdür"
+      "footer.makerPre": "Bir ", "footer.makerPost": " ürünüdür"
     },
     en: {
       "meta.title": "Tempoly – Coming Soon",
@@ -52,7 +52,7 @@
       "features.voice.text": "Tempoly learns your voice, topics and style, so every post feels yours, not generic.",
       "platforms.web": "Web", "platforms.ios": "iOS", "platforms.android": "Android", "platforms.creators": "Built for creators",
       "footer.rights": "All rights reserved.",
-      "footer.maker": "A GokTwins Tech product"
+      "footer.makerPre": "A ", "footer.makerPost": " product"
     },
     de: {
       "meta.title": "Tempoly – Demnächst",
@@ -78,7 +78,7 @@
       "features.voice.text": "Tempoly lernt deine Stimme, Themen und deinen Stil, damit jeder Beitrag nach dir klingt, nicht generisch.",
       "platforms.web": "Web", "platforms.ios": "iOS", "platforms.android": "Android", "platforms.creators": "Für Creator gemacht",
       "footer.rights": "Alle Rechte vorbehalten.",
-      "footer.maker": "Ein Produkt von GokTwins Tech"
+      "footer.makerPre": "Ein Produkt von ", "footer.makerPost": ""
     },
     es: {
       "meta.title": "Tempoly – Muy pronto",
@@ -104,7 +104,7 @@
       "features.voice.text": "Tempoly aprende tu voz, tus temas y tu estilo, para que cada publicación sea tuya, no genérica.",
       "platforms.web": "Web", "platforms.ios": "iOS", "platforms.android": "Android", "platforms.creators": "Hecho para creadores",
       "footer.rights": "Todos los derechos reservados.",
-      "footer.maker": "Un producto de GokTwins Tech"
+      "footer.makerPre": "Un producto de ", "footer.makerPost": ""
     },
     pt: {
       "meta.title": "Tempoly – Em breve",
@@ -130,7 +130,7 @@
       "features.voice.text": "A Tempoly aprende sua voz, seus temas e seu estilo, para que cada post pareça seu, não genérico.",
       "platforms.web": "Web", "platforms.ios": "iOS", "platforms.android": "Android", "platforms.creators": "Feito para criadores",
       "footer.rights": "Todos os direitos reservados.",
-      "footer.maker": "Um produto GokTwins Tech"
+      "footer.makerPre": "Um produto ", "footer.makerPost": ""
     },
     fr: {
       "meta.title": "Tempoly – Bientôt disponible",
@@ -156,7 +156,7 @@
       "features.voice.text": "Tempoly apprend votre voix, vos sujets et votre style, pour que chaque publication soit la vôtre, pas générique.",
       "platforms.web": "Web", "platforms.ios": "iOS", "platforms.android": "Android", "platforms.creators": "Conçu pour les créateurs",
       "footer.rights": "Tous droits réservés.",
-      "footer.maker": "Un produit GokTwins Tech"
+      "footer.makerPre": "Un produit ", "footer.makerPost": ""
     },
     ru: {
       "meta.title": "Tempoly – Скоро",
@@ -182,7 +182,7 @@
       "features.voice.text": "Tempoly учится вашему голосу, темам и стилю, чтобы каждый пост был вашим, а не шаблонным.",
       "platforms.web": "Web", "platforms.ios": "iOS", "platforms.android": "Android", "platforms.creators": "Создано для авторов",
       "footer.rights": "Все права защищены.",
-      "footer.maker": "Продукт GokTwins Tech"
+      "footer.makerPre": "Продукт ", "footer.makerPost": ""
     },
     id: {
       "meta.title": "Tempoly – Segera Hadir",
@@ -208,7 +208,7 @@
       "features.voice.text": "Tempoly mempelajari suara, topik, dan gayamu, sehingga setiap postingan terasa milikmu, bukan generik.",
       "platforms.web": "Web", "platforms.ios": "iOS", "platforms.android": "Android", "platforms.creators": "Dibuat untuk kreator",
       "footer.rights": "Hak cipta dilindungi.",
-      "footer.maker": "Produk GokTwins Tech"
+      "footer.makerPre": "Produk ", "footer.makerPost": ""
     },
     vi: {
       "meta.title": "Tempoly – Sắp ra mắt",
@@ -234,7 +234,7 @@
       "features.voice.text": "Tempoly học giọng văn, chủ đề và phong cách của bạn, để mỗi bài đăng là của bạn, không chung chung.",
       "platforms.web": "Web", "platforms.ios": "iOS", "platforms.android": "Android", "platforms.creators": "Dành cho nhà sáng tạo",
       "footer.rights": "Bảo lưu mọi quyền.",
-      "footer.maker": "Sản phẩm của GokTwins Tech"
+      "footer.makerPre": "Sản phẩm của ", "footer.makerPost": ""
     }
   };
 

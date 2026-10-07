@@ -15,7 +15,7 @@ Derleme adımı yok, saf statik dosyalar:
 index.html    Sayfa iskeleti (metinler data-i18n anahtarlarıyla)
 styles.css    Stil
 app.js        Dil algılama ve çeviri sözlüğü (9 dil)
-hero.svg      Dashboard illüstrasyonu
+img/          Hero fotoğrafları (Unsplash) ve kanal ikonları (Simple Icons, CC0)
 favicon.svg
 og.jpg        Sosyal medya önizleme görseli (1200×630)
 vercel.json   Başlıklar, temiz URL'ler
@@ -28,3 +28,9 @@ tr, en, de, es, pt, fr, ru, id, vi
 
 Dil seçimi sırası: `?lang=` parametresi → localStorage → tarayıcı dili → en.
 Yeni dil eklemek için `app.js` içindeki `I18N` sözlüğüne bir anahtar ekle ve `index.html` ile `sitemap.xml` içindeki dil listelerini güncelle.
+
+## Görsel kaynakları
+
+- Hero kartındaki fotoğraflar: Unsplash (Unsplash License), `img/p1-p4.jpg`
+- Kanal ikonları: Simple Icons (CC0), `img/*.svg`
+- Hero kartı artık `index.html` içinde inline SVG; metinleri `data-i18n` ile çevriliyor.

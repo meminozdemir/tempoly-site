@@ -4,42 +4,52 @@ Tempoly'nin tanıtım sitesi. Şu an çok dilli "çok yakında" sayfası.
 
 - **Canlı:** https://tempoly.app
 - **Uygulama reposu:** ayrı repo (`tempoly`)
-- **Barındırma:** Vercel, proje adı `tempoly-site` (hobby takımı). İlk deploy API üzerinden yapıldı.
-- **Otomatik yayın:** Vercel dashboard → tempoly-site → Settings → Git → "Connect Git Repository" ile bu repo bağlanınca `main` dalına her push otomatik yayınlanır.
+- **Barındırma:** Vercel, proje adı `tempoly-site` (hobby takımı). `main` dalına her push otomatik yayınlanır.
 
 ## Yapı
 
-Derleme adımı yok, saf statik dosyalar:
+Bağımlılık yok. Sayfalar `node build.mjs` ile üretilir ve `site/` içinde depoya eklenir (Vercel derleme yapmaz, `site/` klasörünü yayınlar).
 
 ```
-index.html    Sayfa iskeleti (metinler data-i18n anahtarlarıyla)
-styles.css    Stil
-app.js        Dil algılama ve çeviri sözlüğü (9 dil)
-middleware.js Ana sayfada sunucu tarafı dil seçimi (çerez → tarayıcı → IP)
-img/          Hero fotoğrafları (Unsplash) ve kanal ikonları (Simple Icons, CC0)
-favicon.svg
-og.jpg        Sosyal medya önizleme görseli (1200×630)
-vercel.json   Başlıklar, temiz URL'ler
-robots.txt, sitemap.xml
+build.mjs       Her dil için statik sayfa + sitemap.xml üretir
+src/page.html   Sayfa şablonu (metinler data-i18n / data-i18n-content / data-i18n-alt anahtarlarıyla)
+src/i18n.mjs    Çeviri sözlüğü (9 dil)
+middleware.js   Ana sayfada sunucu tarafı dil seçimi (çerez → tarayıcı → IP)
+site/           Yayınlanan klasör
+  index.html, <dil>/index.html, sitemap.xml   (build.mjs çıktısı, elle düzenlemeyin)
+  styles.css    Stil (derlemede sayfaya gömülür)
+  app.js        Dil menüsü
+  fonts/        Inter ve Space Grotesk (Google Fonts, SIL OFL), kendi sunucumuzdan
+  img/          Hero fotoğrafları (Unsplash, WebP) ve kanal ikonları (Simple Icons, CC0)
+  og.jpg        Sosyal medya önizleme görseli (1200×630)
+vercel.json     Başlıklar, önbellek, temiz URL'ler
 ```
 
-## Diller
+Metin, stil ya da görsel değiştirdikten sonra `node build.mjs` çalıştırıp `site/` ile birlikte commit edin.
 
-tr, en, de, es, pt, fr, ru, id, vi
+## Diller ve SEO
 
-Varsayılan dil Türkçe. Dil seçimi hibrit (goktwins.com ile aynı mantık):
+tr, en, de, es, pt, fr, ru, id, vi. Varsayılan dil Türkçe ve kökte (`/`); diğerleri `/<kod>` adresinde (`/en`, `/de` …).
 
-1. `?lang=` parametresi (paylaşılan bağlantı, hreflang)
+Her dil ayrı bir statik sayfadır: çevrilmiş metin HTML'in içindedir, sayfanın kendini gösteren canonical'ı, tüm diller için hreflang bağlantıları, dile göre başlık/açıklama/og:locale ve yapılandırılmış verisi (SoftwareApplication, WebSite, GokTwins Tech yayıncı) vardır. Bu sayede Google her dili ayrı dizine ekler.
+
+Dil seçimi (goktwins.com ile aynı mantık), `middleware.js` (yalnız `/`):
+
+1. Eski `/?lang=<kod>` bağlantıları kalıcı olarak (308) `/<kod>` adresine yönlenir
 2. Dil menüsünden yapılan seçim (`lang` çerezi, 1 yıl)
-3. Tarayıcı dili (`Accept-Language`, q sırasına göre): sitede olan ilk dil
-4. IP ülkesinin dili (`x-vercel-ip-country`); ülke eşlemesi yoksa İngilizce, ülke bilgisi yoksa Türkçe
+3. Botlar yönlendirilmez
+4. Tarayıcı dili (`Accept-Language`, q sırasına göre): sitede olan ilk dil
+5. IP ülkesinin dili (`x-vercel-ip-country`); ülke eşlemesi yoksa İngilizce, ülke bilgisi yoksa Türkçe
 
-`middleware.js` (Vercel Routing Middleware, yalnız `/`) bu sırayı sunucuda uygular. Seçilen dil Türkçe değilse `/?lang=<kod>` adresine 307 ile yönlendirir. Botlar yönlendirilmez. `app.js` aynı sırayı istemcide izler (IP adımı hariç) ve Türkçe'ye düşer.
+Yeni dil eklemek için: `src/i18n.mjs`'e sözlüğü, `build.mjs` ve `middleware.js` içindeki `LANGS` listelerine kodu, `src/page.html`'deki dil menüsüne seçeneği ekleyin; `node build.mjs`.
 
-Yeni dil eklemek için `app.js` içindeki `I18N` sözlüğüne bir anahtar ekle; `middleware.js` içindeki `LANGS` ve `COUNTRY_LANG`, `index.html` ve `sitemap.xml` içindeki dil listelerini güncelle.
+## Performans
+
+- Yazı tipleri kendi sunucumuzdan; Latin alt kümeleri `preload` ile erken iner, diğer alt kümeler (`unicode-range`) yalnızca gerektiğinde.
+- `styles.css` sayfaya gömülür (ayrı istek yok).
+- HTML'deki css/js/svg/webp adreslerine içerik özeti (`?v=`) eklenir; bu dosyalar ve yazı tipleri bir yıl `immutable` önbelleklenir. Yazı tipi dosyası değişirse dosya adını değiştirin.
 
 ## Görsel kaynakları
 
-- Hero kartındaki fotoğraflar: Unsplash (Unsplash License), `img/p1-p4.jpg`
-- Kanal ikonları: Simple Icons (CC0), `img/*.svg`
-- Hero kartı artık `index.html` içinde inline SVG; metinleri `data-i18n` ile çevriliyor.
+- Hero kartındaki fotoğraflar: Unsplash (Unsplash License), `site/img/p1-p4.webp`
+- Kanal ikonları: Simple Icons (CC0), `site/img/*.svg`

@@ -7,7 +7,7 @@
   <meta name="description" content="Tempoly: ИИ, который каждый день создаёт свежий контент для ваших соцсетей. Текст, изображения и видео, генерируются по расписанию и готовы к публикации. Скоро на Web, iOS и Android.">
   <meta name="theme-color" content="#0a0a14">
   <link rel="icon" href="/favicon.ico" sizes="48x48">
-  <link rel="icon" href="/favicon.svg?v=34168a5b99" type="image/svg+xml">
+  <link rel="icon" href="/favicon.svg?v=c500482385" type="image/svg+xml">
   <link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
@@ -222,7 +222,16 @@ padding: 18px 16px 26px; color: var(--muted); font-size: 13px;
 .orb--a { width: 420px; height: 420px; top: -200px; }
 .grid { background-size: 32px 32px; }
 }
-@media (prefers-reduced-motion: reduce) { .soon, .shot-svg .spin { animation: none; } }</style>
+@media (prefers-reduced-motion: reduce) { .soon, .shot-svg .spin { animation: none; } }
+.nf-home {
+margin-top: 10px; display: inline-flex; align-items: center; padding: 12px 24px; border-radius: 999px;
+background: linear-gradient(90deg, #a78bfa 0%, #22d3ee 100%); color: var(--bg); font-weight: 700; text-decoration: none;
+box-shadow: 0 10px 30px rgba(167, 139, 250, 0.3); transition: transform .15s, filter .15s;
+}
+.nf-home:hover { transform: translateY(-1px); filter: brightness(1.08); }
+.nf-langs { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 16px; margin-top: 18px; font-size: 14px; }
+.nf-langs a { color: var(--muted); text-decoration: none; }
+.nf-langs a:hover { color: var(--text); }</style>
 </head>
 <body>
   <div class="bg" aria-hidden="true">
@@ -491,6 +500,6 @@ padding: 18px 16px 26px; color: var(--muted); font-size: 13px;
     </a>
   </footer>
 
-  <script src="/app.js?v=8b5ff72697" defer></script>
+  <script src="/app.js?v=f0ca1aac2e" defer></script>
 </body>
 </html>

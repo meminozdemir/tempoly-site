@@ -3,6 +3,37 @@
 (function () {
   "use strict";
 
+  // 404 sayfası (build.mjs): metinleri ziyaretçinin diline çevirir. Sıra: adresteki dil klasörü (/de/...),
+  // "lang" çerezi, tarayıcı dili; hiçbiri yoksa sayfa varsayılan dilde kalır.
+  var nf = document.body.getAttribute("data-nf");
+  if (nf) {
+    var texts = JSON.parse(nf);
+    var saved = document.cookie.match(/(?:^|;\s*)lang=([^;]*)/);
+    var candidates = [location.pathname.split("/")[1], saved && saved[1]].concat(navigator.languages || [navigator.language]);
+    for (var c = 0; c < candidates.length; c++) {
+      var code = String(candidates[c] || "").toLowerCase().split("-")[0];
+      if (!texts[code]) continue;
+      var t = texts[code];
+      document.documentElement.lang = code;
+      document.title = "404 – " + t.title + document.title.slice(document.title.lastIndexOf(" | "));
+      document.getElementById("nf-title").textContent = t.title;
+      document.getElementById("nf-lead").textContent = t.lead;
+      var back = document.getElementById("nf-back");
+      back.textContent = t.back;
+      back.setAttribute("href", t.path);
+      var keyed = document.querySelectorAll("[data-k]");
+      for (var e = 0; e < keyed.length; e++) {
+        var value = t.k[keyed[e].getAttribute("data-k")];
+        if (value !== undefined) keyed[e].textContent = value;
+      }
+      var label = document.getElementById("lang-label");
+      if (label) label.textContent = t.name;
+      var opts = document.querySelectorAll("#lang-menu li");
+      for (var o = 0; o < opts.length; o++) opts[o].setAttribute("aria-selected", String(opts[o].getAttribute("data-lang") === code));
+      break;
+    }
+  }
+
   function saveChoice(lang) {
     var secure = location.protocol === "https:" ? "; Secure" : "";
     document.cookie = "lang=" + encodeURIComponent(lang) + "; Path=/; Max-Age=31536000; SameSite=Lax" + secure;

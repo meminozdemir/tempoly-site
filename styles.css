@@ -44,6 +44,9 @@ body {
 }
 
 .top, .hero, .foot { position: relative; z-index: 1; }
+/* Başlık hero'nun üstünde olmalı: her z-index kendi katmanını açar; aksi halde dil menüsü
+   (.top içinde z-index 20) .hero'nun altında kalır ve tıklamalar hero'ya gider. */
+.top { z-index: 10; }
 
 .top {
   display: flex; align-items: center; justify-content: space-between;

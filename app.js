@@ -239,21 +239,35 @@
   };
 
   var SUPPORTED = Object.keys(I18N);
-  var STORAGE_KEY = "tempoly.lang";
+  var DEFAULT = "tr";
+  var COOKIE = "lang";
+  var ALIASES = { "in": "id", ms: "id" };
 
+  function readCookie(name) {
+    var match = document.cookie.match(new RegExp("(?:^|;\\s*)" + name + "=([^;]*)"));
+    return match ? decodeURIComponent(match[1]) : null;
+  }
+
+  // Dil menüsünden yapılan seçim çerezde tutulur; middleware.js de bunu okur ve ana sayfada önceliklidir.
+  function saveChoice(lang) {
+    var secure = location.protocol === "https:" ? "; Secure" : "";
+    document.cookie = COOKIE + "=" + encodeURIComponent(lang) + "; Path=/; Max-Age=31536000; SameSite=Lax" + secure;
+  }
+
+  // middleware.js ile aynı sıra: ?lang → çerez → tarayıcı dili → tr.
+  // IP ülkesine middleware bakar: ülkenin dili tr değilse zaten "?lang=" ile yönlendirir.
   function detectLanguage() {
     var fromQuery = new URLSearchParams(location.search).get("lang");
     if (fromQuery && I18N[fromQuery]) return fromQuery;
-    try {
-      var stored = localStorage.getItem(STORAGE_KEY);
-      if (stored && I18N[stored]) return stored;
-    } catch (e) { /* özel pencere vb. */ }
-    var candidates = navigator.languages || [navigator.language || "en"];
+    var saved = readCookie(COOKIE);
+    if (saved && I18N[saved]) return saved;
+    var candidates = navigator.languages || [navigator.language || ""];
     for (var i = 0; i < candidates.length; i++) {
       var code = String(candidates[i]).toLowerCase().split("-")[0];
+      code = ALIASES[code] || code;
       if (I18N[code]) return code;
     }
-    return "en";
+    return DEFAULT;
   }
 
   function apply(lang) {
@@ -273,7 +287,6 @@
       li.setAttribute("aria-selected", selected ? "true" : "false");
       if (selected && label) label.textContent = li.textContent;
     });
-    try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) { /* yok say */ }
   }
 
   function setupMenu() {
@@ -295,6 +308,7 @@
     }
     function choose(li) {
       var lang = li.getAttribute("data-lang");
+      saveChoice(lang);
       apply(lang);
       var url = new URL(location.href);
       url.searchParams.set("lang", lang);
@@ -330,6 +344,8 @@
     var year = document.getElementById("year");
     if (year) year.textContent = String(new Date().getFullYear());
     setupMenu();
+    // Eski sürüm her ziyarette dili localStorage'a yazıyordu; seçim artık çerezde.
+    try { localStorage.removeItem("tempoly.lang"); } catch (e) { /* özel pencere vb. */ }
     apply(detectLanguage());
   });
 

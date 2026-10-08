@@ -74,7 +74,7 @@ const CSS = readFileSync(join(OUT, "styles.css"), "utf8")
   .replace(/\s*\n\s*/g, "\n")
   .trim();
 
-function page(lang) {
+function page(lang, opts = {}) {
   const t = I18N[lang];
   const get = (key) => {
     if (t[key] === undefined) throw new Error(`${lang}: "${key}" çevirisi yok`);
@@ -98,7 +98,7 @@ function page(lang) {
   html = html.replace(/(<a class="brand" href=")\/(")/, `$1${path(lang)}$2`);
 
   const description = get("meta.description");
-  const seo = [
+  const seo = opts.notFound ? [`<meta name="robots" content="noindex">`] : [
     `<link rel="canonical" href="${url(lang)}">`,
     `<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">`,
     `<meta property="og:url" content="${url(lang)}">`,
@@ -116,6 +116,46 @@ function page(lang) {
   html = html.replace('  <link rel="stylesheet" href="/styles.css">', () => `  <style>${CSS}</style>`);
   html = html.replace("  <!--fonts-->", PRELOAD_FONTS.map((f) => `  <link rel="preload" href="${f}" as="font" type="font/woff2" crossorigin>`).join("\n"));
   return html;
+}
+
+// 404 sayfası: varsayılan dilde üretilir; app.js ziyaretçinin dilini (adresteki dil klasörü, "lang" çerezi,
+// tarayıcı dili) bulup metinleri ve "ana sayfaya dön" bağlantısını o dile çevirir. Arama motorlarına kapalı.
+const NOT_FOUND = {
+  tr: { title: "Sayfa bulunamadı", lead: "Aradığın sayfa taşınmış ya da hiç var olmamış olabilir.", back: "Ana sayfaya dön" },
+  en: { title: "Page not found", lead: "The page you're looking for may have moved or never existed.", back: "Back to home" },
+  de: { title: "Seite nicht gefunden", lead: "Die gesuchte Seite wurde möglicherweise verschoben oder existiert nicht.", back: "Zur Startseite" },
+  es: { title: "Página no encontrada", lead: "Es posible que la página que buscas se haya movido o no exista.", back: "Volver al inicio" },
+  pt: { title: "Página não encontrada", lead: "A página que você procura pode ter sido movida ou não existir.", back: "Voltar ao início" },
+  fr: { title: "Page introuvable", lead: "La page que vous cherchez a peut-être été déplacée ou n'existe pas.", back: "Retour à l'accueil" },
+  ru: { title: "Страница не найдена", lead: "Возможно, страница, которую вы ищете, была перемещена или не существует.", back: "На главную" },
+  id: { title: "Halaman tidak ditemukan", lead: "Halaman yang Anda cari mungkin telah dipindahkan atau tidak pernah ada.", back: "Kembali ke beranda" },
+  vi: { title: "Không tìm thấy trang", lead: "Trang bạn đang tìm có thể đã được chuyển đi hoặc không tồn tại.", back: "Về trang chủ" },
+};
+
+function notFound() {
+  const nf = NOT_FOUND[DEFAULT];
+  // Alt bilgideki çevrilen metinler (footer.*) de 404'te ziyaretçinin diline geçer: data-k ile işaretlenir.
+  const footKeys = Object.keys(I18N[DEFAULT]).filter((k) => k.startsWith("footer."));
+  const texts = Object.fromEntries(
+    CODES.map((c) => [c, { ...NOT_FOUND[c], path: path(c), name: LANGS[c].name, k: Object.fromEntries(footKeys.map((k) => [k, I18N[c][k]])) }])
+  );
+  let html = page(DEFAULT, { notFound: true });
+  html = html.replace(/<title>[^<]*<\/title>/, `<title>404 – ${esc(nf.title)} | ${NAME}</title>`);
+  html = html.replace(
+    /<main class="hero">[\s\S]*?<\/main>/,
+    `<main class="hero nf">
+    <p class="eyebrow">404</p>
+    <h1 class="title"><span class="title-word">4</span><span class="title-word title-word--accent">04</span></h1>
+    <p class="soon" id="nf-title">${esc(nf.title)}</p>
+    <p class="lead" id="nf-lead">${esc(nf.lead)}</p>
+    <a class="nf-home" id="nf-back" href="${path(DEFAULT)}">${esc(nf.back)}</a>
+    <nav class="nf-langs" aria-label="Languages">
+      ${CODES.map((c) => `<a href="${path(c)}" hreflang="${c}" lang="${c}">${LANGS[c].name}</a>`).join("\n      ")}
+    </nav>
+  </main>`
+  );
+  for (const k of footKeys) html = html.replace(`<span>${esc(I18N[DEFAULT][k])}</span>`, `<span data-k="${k}">${esc(I18N[DEFAULT][k])}</span>`);
+  return html.replace("<body>", `<body data-nf="${attr(JSON.stringify(texts))}">`);
 }
 
 // Önbellek: HTML'deki stil, betik ve görsel adreslerine içerik özeti eklenir (?v=...). Dosya değişince adres
@@ -136,6 +176,8 @@ function write(file, content) {
 }
 
 for (const lang of CODES) write(lang === DEFAULT ? join(OUT, "index.html") : join(OUT, lang, "index.html"), page(lang));
+
+write(join(OUT, "404.html"), notFound());
 
 const links = CODES.map((c) => `    <xhtml:link rel="alternate" hreflang="${c}" href="${url(c)}"/>`).concat(`    <xhtml:link rel="alternate" hreflang="x-default" href="${url(DEFAULT)}"/>`).join("\n");
 write(

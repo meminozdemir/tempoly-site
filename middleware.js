@@ -1,20 +1,16 @@
 // Otomatik dil seçimi (Vercel Routing Middleware, goktwins.com ile aynı mantık). Yalnızca ana sayfada ("/") çalışır.
-// Sayfa tek; dil app.js'te çevrilir. Varsayılan dil (tr) kökte kalır, diğer diller "/?lang=<kod>" adresine yönlenir.
+// Her dilin kendi sayfası var (build.mjs): varsayılan dil (tr) kökte, diğerleri /<kod> adresinde.
 //
 // Sıra:
-//   1. Adreste ?lang= varsa dokunulmaz (paylaşılan bağlantı, hreflang).
+//   1. Eski "/?lang=<kod>" bağlantıları kalıcı olarak (308) yeni adrese yönlenir (botlar dahil).
 //   2. Dil menüsünden yapılmış seçim ("lang" çerezi) her zaman önceliklidir.
 //   3. Arama motoru ve bağlantı önizleme botları yönlendirilmez (hreflang ile tüm diller bulunur).
 //   4. Tarayıcı dili (Accept-Language, q değerine göre sıralı): sitede olan ilk dil kazanır.
-//      İngiltere'de yaşayan, tarayıcısı Türkçe bir ziyaretçi Türkçe sayfayı görür.
 //   5. Tarayıcı dilinden karar verilemezse IP ülkesinin dili; o da yoksa İngilizce.
-//
-// app.js aynı sırayı izler (?lang → çerez → tarayıcı dili → tr). Burada tr seçilip yönlendirme yapılmadığında
-// istemci de tr'ye düşer: tarayıcı dili sitede olsaydı burada zaten o seçilirdi.
 
 export const config = { matcher: "/" };
 
-// app.js içindeki I18N anahtarlarıyla aynı olmalı.
+// build.mjs içindeki LANGS ile aynı olmalı.
 const LANGS = ["tr", "en", "de", "es", "pt", "fr", "ru", "id", "vi"];
 const DEFAULT = "tr";
 
@@ -35,6 +31,8 @@ const COUNTRY_LANG = {
 const BY_COUNTRY = Object.fromEntries(Object.entries(COUNTRY_LANG).flatMap(([lang, list]) => list.map((c) => [c, lang])));
 
 const BOT = /bot|crawl|spider|slurp|mediapartners|facebookexternalhit|embedly|whatsapp|telegram|linkedin|twitter|discord|slack|skype|preview|lighthouse|headless/i;
+
+const path = (lang) => (lang === DEFAULT ? "/" : `/${lang}`);
 
 function cookie(request, name) {
   const header = request.headers.get("cookie") || "";
@@ -70,18 +68,23 @@ function chooseLanguage(request) {
 }
 
 const pass = () => new Response(null, { headers: { "x-middleware-next": "1" } });
+const redirect = (url, status, headers = {}) => new Response(null, { status, headers: { Location: url.toString(), ...headers } });
 
 export default function middleware(request) {
   const url = new URL(request.url);
-  if (url.searchParams.has("lang")) return pass();
+
+  const legacy = url.searchParams.get("lang");
+  if (legacy !== null) {
+    url.searchParams.delete("lang");
+    url.pathname = path(LANGS.includes(legacy) ? legacy : DEFAULT);
+    return redirect(url, 308);
+  }
+
   if (BOT.test(request.headers.get("user-agent") || "")) return pass();
 
   const lang = chooseLanguage(request);
   if (lang === DEFAULT) return pass();
 
-  url.searchParams.set("lang", lang);
-  return new Response(null, {
-    status: 307,
-    headers: { Location: url.toString(), "Cache-Control": "private, no-store", Vary: "Accept-Language, Cookie" },
-  });
+  url.pathname = path(lang);
+  return redirect(url, 307, { "Cache-Control": "private, no-store", Vary: "Accept-Language, Cookie" });
 }

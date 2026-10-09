@@ -187,6 +187,10 @@ body {
   padding: 18px 16px 26px; color: var(--muted); font-size: 13px;
 }
 .dot { opacity: 0.5; }
+.legal { flex-basis: 100%; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 14px; font-size: 12px; }
+.legal a { color: var(--muted); text-decoration: none; }
+.legal a:hover { color: var(--accent); }
+.pay { flex-basis: 100%; margin: 0; text-align: center; font-size: 11px; opacity: 0.8; }
 .maker strong { color: var(--text); font-weight: 700; }
 .maker { display: inline-flex; align-items: center; gap: 8px; color: var(--text); text-decoration: none; font-weight: 500; }
 .maker img { width: 20px; height: 20px; border-radius: 5px; }

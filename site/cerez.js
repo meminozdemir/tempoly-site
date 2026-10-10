@@ -8,6 +8,9 @@
   var box = document.getElementById("cerez");
   if (!box) return;
   var id = box.getAttribute("data-ga");
+  // Geçici test modu (build.mjs, GA_TEST_MODE): gtag.js onay beklenmeden yüklenir ki Google etiket testi
+  // etiketi bulabilsin. İzinler yine "denied" başlar; onay verilmeden çerez yazılmaz.
+  var always = box.hasAttribute("data-always");
   var KEY = "cerez-onayi";
   var YEAR = 365 * 24 * 60 * 60 * 1000;
 
@@ -40,6 +43,9 @@
   function grant(later) {
     granted = true;
     gtag("consent", "update", { analytics_storage: "granted" });
+    setup(later);
+  }
+  function setup(later) {
     if (configured || !id) return;
     configured = true;
     gtag("js", new Date());
@@ -85,5 +91,8 @@
 
   var choice = read();
   if (choice === "granted") grant(true);
-  else if (choice !== "denied") show();
+  else {
+    if (always) setup(true);
+    if (choice !== "denied") show();
+  }
 })();

@@ -17,6 +17,7 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import I18N from "./src/i18n.mjs";
+import CONSENT from "./src/consent.mjs";
 
 // ---- Siteye özel ayarlar -------------------------------------------------------------------------------
 const SITE = "https://tempoly.app";
@@ -38,6 +39,11 @@ const LANGS = {
 };
 // İlk ekranda kullanılan yazı tipleri; tarayıcı CSS'i beklemeden indirmeye başlar.
 const PRELOAD_FONTS = ["/fonts/inter-latin.woff2", "/fonts/space-grotesk-latin.woff2"];
+// Google Analytics 4 ölçüm kimliği (G-…). Boşken çerez bildirimi ve Analytics sayfalara eklenmez.
+// Analytics yalnızca ziyaretçi çerez bildiriminde onay verince yüklenir (site/cerez.js).
+const GA_ID = "";
+// "Çerez tercihleri" bağlantısının alt bilgideki yeri: [aranan, yerine konan].
+const FOOTER_SETTINGS = (button) => ["\n    </nav>\n    <p class=\"pay\">", `\n      ${button}\n    </nav>\n    <p class="pay">`];
 const PUBLISHER = { "@type": "Organization", "@id": "https://goktwins.com/#organization", name: "GokTwins Tech", url: "https://goktwins.com", logo: "https://goktwins.com/img/logo-512.png" };
 const structuredData = (lang, url, t) => [
   {
@@ -115,6 +121,20 @@ function page(lang, opts = {}) {
   // Stil dosyası küçük (~8 KB): ayrı bir istek ilk çizimi bekletmesin diye sayfanın içine gömülür.
   html = html.replace('  <link rel="stylesheet" href="/styles.css">', () => `  <style>${CSS}</style>`);
   html = html.replace("  <!--fonts-->", PRELOAD_FONTS.map((f) => `  <link rel="preload" href="${f}" as="font" type="font/woff2" crossorigin>`).join("\n"));
+  if (GA_ID) {
+    const c = CONSENT[lang] ?? CONSENT.en;
+    const [anchor, replacement] = FOOTER_SETTINGS(`<button type="button" class="foot-link" data-consent-open>${esc(c.settings)}</button>`);
+    html = html.replace(anchor, replacement);
+    const banner = `  <div class="consent" id="cerez" role="region" aria-label="${attr(c.label)}" data-ga="${GA_ID}" hidden>
+    <p>${c.text.replace("{privacy}", c.privacy)}</p>
+    <div class="consent-actions">
+      <button class="consent-btn" type="button" data-consent="denied">${esc(c.reject)}</button>
+      <button class="consent-btn consent-btn--accept" type="button" data-consent="granted">${esc(c.accept)}</button>
+    </div>
+  </div>
+`;
+    html = html.replace('  <script src="/app.js" defer></script>', `${banner}  <script src="/app.js" defer></script>\n  <script src="/cerez.js" defer></script>`);
+  }
   return html;
 }
 

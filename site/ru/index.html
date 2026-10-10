@@ -7,7 +7,7 @@
   <meta name="description" content="Tempoly: ИИ, который каждый день создаёт свежий контент для ваших соцсетей. Текст, изображения и видео, генерируются по расписанию и готовы к публикации. Скоро на Web, iOS и Android.">
   <meta name="theme-color" content="#0a0a14">
   <link rel="icon" href="/favicon.ico" sizes="48x48">
-  <link rel="icon" href="/favicon.svg?v=34168a5b99" type="image/svg+xml">
+  <link rel="icon" href="/favicon.svg?v=c500482385" type="image/svg+xml">
   <link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
@@ -235,7 +235,21 @@ box-shadow: 0 10px 30px rgba(167, 139, 250, 0.3); transition: transform .15s, fi
 .nf-home:hover { transform: translateY(-1px); filter: brightness(1.08); }
 .nf-langs { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 16px; margin-top: 18px; font-size: 14px; }
 .nf-langs a { color: var(--muted); text-decoration: none; }
-.nf-langs a:hover { color: var(--text); }</style>
+.nf-langs a:hover { color: var(--text); }
+.consent {
+position: fixed; z-index: 40; left: 16px; right: 16px; bottom: 16px; max-width: 620px; margin: 0 auto;
+display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 16px 18px;
+background: var(--bg-2); color: var(--text); border: 1px solid var(--chip-border); border-radius: 14px;
+box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45); font-size: 14px; line-height: 1.5;
+}
+.consent[hidden] { display: none; }
+.consent p { flex: 1 1 280px; margin: 0; }
+.consent a { color: var(--accent); }
+.consent-actions { display: flex; gap: 8px; margin-left: auto; }
+.consent-btn { padding: 9px 18px; border-radius: 999px; font: inherit; font-weight: 700; cursor: pointer; border: 1px solid var(--chip-border); background: transparent; color: var(--text); }
+.consent-btn--accept { background: linear-gradient(90deg, #a78bfa 0%, #22d3ee 100%); border-color: transparent; color: var(--bg); }
+.foot-link { padding: 0; border: 0; background: none; color: var(--muted); font: inherit; font-size: 12px; cursor: pointer; }
+.foot-link:hover { color: var(--text); }</style>
 </head>
 <body>
   <div class="bg" aria-hidden="true">
@@ -499,7 +513,7 @@ box-shadow: 0 10px 30px rgba(167, 139, 250, 0.3); transition: transform .15s, fi
     <span>© <span id="year">2026</span> Tempoly. <span>Все права защищены.</span></span>
     <span class="dot">•</span>
     <a class="maker" href="https://goktwins.com" target="_blank" rel="noopener">
-      <img src="/goktwins.svg?v=21b67d18e3" alt="" width="20" height="20" loading="lazy" decoding="async">
+      <img src="/goktwins.svg?v=ef22f04859" alt="" width="20" height="20" loading="lazy" decoding="async">
       <span><span>Продукт </span><strong>GokTwins Tech</strong><span></span></span>
     </a>
     <nav class="legal">
@@ -513,6 +527,6 @@ box-shadow: 0 10px 30px rgba(167, 139, 250, 0.3); transition: transform .15s, fi
     <p class="pay">iyzico · Visa · Mastercard · American Express · Troy</p>
   </footer>
 
-  <script src="/app.js?v=f0ca1aac2e" defer></script>
+  <script src="/app.js?v=a2ef0b53e2" defer></script>
 </body>
 </html>

@@ -7,7 +7,7 @@
   <meta name="description" content="Tempoly: her gün senin için taze sosyal medya içeriği üreten yapay zekâ. Metin, görsel ve video; planlı üretilir, yayına hazır gelir. Web, iOS ve Android'de çok yakında.">
   <meta name="theme-color" content="#0a0a14">
   <link rel="icon" href="/favicon.ico" sizes="48x48">
-  <link rel="icon" href="/favicon.svg?v=34168a5b99" type="image/svg+xml">
+  <link rel="icon" href="/favicon.svg?v=c500482385" type="image/svg+xml">
   <link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
@@ -210,7 +210,21 @@ box-shadow: 0 10px 30px rgba(167, 139, 250, 0.3); transition: transform .15s, fi
 .nf-home:hover { transform: translateY(-1px); filter: brightness(1.08); }
 .nf-langs { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 16px; margin-top: 18px; font-size: 14px; }
 .nf-langs a { color: var(--muted); text-decoration: none; }
-.nf-langs a:hover { color: var(--text); }</style>
+.nf-langs a:hover { color: var(--text); }
+.consent {
+position: fixed; z-index: 40; left: 16px; right: 16px; bottom: 16px; max-width: 620px; margin: 0 auto;
+display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 16px 18px;
+background: var(--bg-2); color: var(--text); border: 1px solid var(--chip-border); border-radius: 14px;
+box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45); font-size: 14px; line-height: 1.5;
+}
+.consent[hidden] { display: none; }
+.consent p { flex: 1 1 280px; margin: 0; }
+.consent a { color: var(--accent); }
+.consent-actions { display: flex; gap: 8px; margin-left: auto; }
+.consent-btn { padding: 9px 18px; border-radius: 999px; font: inherit; font-weight: 700; cursor: pointer; border: 1px solid var(--chip-border); background: transparent; color: var(--text); }
+.consent-btn--accept { background: linear-gradient(90deg, #a78bfa 0%, #22d3ee 100%); border-color: transparent; color: var(--bg); }
+.foot-link { padding: 0; border: 0; background: none; color: var(--muted); font: inherit; font-size: 12px; cursor: pointer; }
+.foot-link:hover { color: var(--text); }</style>
 </head>
 <body data-nf="{&quot;tr&quot;:{&quot;title&quot;:&quot;Sayfa bulunamadı&quot;,&quot;lead&quot;:&quot;Aradığın sayfa taşınmış ya da hiç var olmamış olabilir.&quot;,&quot;back&quot;:&quot;Ana sayfaya dön&quot;,&quot;path&quot;:&quot;/&quot;,&quot;name&quot;:&quot;Türkçe&quot;,&quot;k&quot;:{&quot;footer.rights&quot;:&quot;Tüm hakları saklıdır.&quot;,&quot;footer.makerPre&quot;:&quot;Bir &quot;,&quot;footer.makerPost&quot;:&quot; ürünüdür&quot;}},&quot;en&quot;:{&quot;title&quot;:&quot;Page not found&quot;,&quot;lead&quot;:&quot;The page you're looking for may have moved or never existed.&quot;,&quot;back&quot;:&quot;Back to home&quot;,&quot;path&quot;:&quot;/en&quot;,&quot;name&quot;:&quot;English&quot;,&quot;k&quot;:{&quot;footer.rights&quot;:&quot;All rights reserved.&quot;,&quot;footer.makerPre&quot;:&quot;A &quot;,&quot;footer.makerPost&quot;:&quot; product&quot;}},&quot;de&quot;:{&quot;title&quot;:&quot;Seite nicht gefunden&quot;,&quot;lead&quot;:&quot;Die gesuchte Seite wurde möglicherweise verschoben oder existiert nicht.&quot;,&quot;back&quot;:&quot;Zur Startseite&quot;,&quot;path&quot;:&quot;/de&quot;,&quot;name&quot;:&quot;Deutsch&quot;,&quot;k&quot;:{&quot;footer.rights&quot;:&quot;Alle Rechte vorbehalten.&quot;,&quot;footer.makerPre&quot;:&quot;Ein Produkt von &quot;,&quot;footer.makerPost&quot;:&quot;&quot;}},&quot;es&quot;:{&quot;title&quot;:&quot;Página no encontrada&quot;,&quot;lead&quot;:&quot;Es posible que la página que buscas se haya movido o no exista.&quot;,&quot;back&quot;:&quot;Volver al inicio&quot;,&quot;path&quot;:&quot;/es&quot;,&quot;name&quot;:&quot;Español&quot;,&quot;k&quot;:{&quot;footer.rights&quot;:&quot;Todos los derechos reservados.&quot;,&quot;footer.makerPre&quot;:&quot;Un producto de &quot;,&quot;footer.makerPost&quot;:&quot;&quot;}},&quot;pt&quot;:{&quot;title&quot;:&quot;Página não encontrada&quot;,&quot;lead&quot;:&quot;A página que você procura pode ter sido movida ou não existir.&quot;,&quot;back&quot;:&quot;Voltar ao início&quot;,&quot;path&quot;:&quot;/pt&quot;,&quot;name&quot;:&quot;Português&quot;,&quot;k&quot;:{&quot;footer.rights&quot;:&quot;Todos os direitos reservados.&quot;,&quot;footer.makerPre&quot;:&quot;Um produto &quot;,&quot;footer.makerPost&quot;:&quot;&quot;}},&quot;fr&quot;:{&quot;title&quot;:&quot;Page introuvable&quot;,&quot;lead&quot;:&quot;La page que vous cherchez a peut-être été déplacée ou n'existe pas.&quot;,&quot;back&quot;:&quot;Retour à l'accueil&quot;,&quot;path&quot;:&quot;/fr&quot;,&quot;name&quot;:&quot;Français&quot;,&quot;k&quot;:{&quot;footer.rights&quot;:&quot;Tous droits réservés.&quot;,&quot;footer.makerPre&quot;:&quot;Un produit &quot;,&quot;footer.makerPost&quot;:&quot;&quot;}},&quot;ru&quot;:{&quot;title&quot;:&quot;Страница не найдена&quot;,&quot;lead&quot;:&quot;Возможно, страница, которую вы ищете, была перемещена или не существует.&quot;,&quot;back&quot;:&quot;На главную&quot;,&quot;path&quot;:&quot;/ru&quot;,&quot;name&quot;:&quot;Русский&quot;,&quot;k&quot;:{&quot;footer.rights&quot;:&quot;Все права защищены.&quot;,&quot;footer.makerPre&quot;:&quot;Продукт &quot;,&quot;footer.makerPost&quot;:&quot;&quot;}},&quot;id&quot;:{&quot;title&quot;:&quot;Halaman tidak ditemukan&quot;,&quot;lead&quot;:&quot;Halaman yang Anda cari mungkin telah dipindahkan atau tidak pernah ada.&quot;,&quot;back&quot;:&quot;Kembali ke beranda&quot;,&quot;path&quot;:&quot;/id&quot;,&quot;name&quot;:&quot;Bahasa Indonesia&quot;,&quot;k&quot;:{&quot;footer.rights&quot;:&quot;Hak cipta dilindungi.&quot;,&quot;footer.makerPre&quot;:&quot;Produk &quot;,&quot;footer.makerPost&quot;:&quot;&quot;}},&quot;vi&quot;:{&quot;title&quot;:&quot;Không tìm thấy trang&quot;,&quot;lead&quot;:&quot;Trang bạn đang tìm có thể đã được chuyển đi hoặc không tồn tại.&quot;,&quot;back&quot;:&quot;Về trang chủ&quot;,&quot;path&quot;:&quot;/vi&quot;,&quot;name&quot;:&quot;Tiếng Việt&quot;,&quot;k&quot;:{&quot;footer.rights&quot;:&quot;Bảo lưu mọi quyền.&quot;,&quot;footer.makerPre&quot;:&quot;Sản phẩm của &quot;,&quot;footer.makerPost&quot;:&quot;&quot;}}}">
   <div class="bg" aria-hidden="true">
@@ -276,7 +290,7 @@ box-shadow: 0 10px 30px rgba(167, 139, 250, 0.3); transition: transform .15s, fi
     <span>© <span id="year">2026</span> Tempoly. <span data-k="footer.rights">Tüm hakları saklıdır.</span></span>
     <span class="dot">•</span>
     <a class="maker" href="https://goktwins.com" target="_blank" rel="noopener">
-      <img src="/goktwins.svg?v=21b67d18e3" alt="" width="20" height="20" loading="lazy" decoding="async">
+      <img src="/goktwins.svg?v=ef22f04859" alt="" width="20" height="20" loading="lazy" decoding="async">
       <span><span data-k="footer.makerPre">Bir </span><strong>GokTwins Tech</strong><span data-k="footer.makerPost"> ürünüdür</span></span>
     </a>
     <nav class="legal">
@@ -290,6 +304,6 @@ box-shadow: 0 10px 30px rgba(167, 139, 250, 0.3); transition: transform .15s, fi
     <p class="pay">iyzico · Visa · Mastercard · American Express · Troy</p>
   </footer>
 
-  <script src="/app.js?v=f0ca1aac2e" defer></script>
+  <script src="/app.js?v=a2ef0b53e2" defer></script>
 </body>
 </html>

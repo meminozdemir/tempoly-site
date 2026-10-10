@@ -41,7 +41,7 @@ const LANGS = {
 const PRELOAD_FONTS = ["/fonts/inter-latin.woff2", "/fonts/space-grotesk-latin.woff2"];
 // Google Analytics 4 ölçüm kimliği (G-…). Boşken çerez bildirimi ve Analytics sayfalara eklenmez.
 // Analytics yalnızca ziyaretçi çerez bildiriminde onay verince yüklenir (site/cerez.js).
-const GA_ID = "";
+const GA_ID = "G-R52PJW1QF1";
 // "Çerez tercihleri" bağlantısının alt bilgideki yeri: [aranan, yerine konan].
 const FOOTER_SETTINGS = (button) => ["\n    </nav>\n    <p class=\"pay\">", `\n      ${button}\n    </nav>\n    <p class="pay">`];
 const PUBLISHER = { "@type": "Organization", "@id": "https://goktwins.com/#organization", name: "GokTwins Tech", url: "https://goktwins.com", logo: "https://goktwins.com/img/logo-512.png" };
